@@ -12,7 +12,8 @@ class LessonApplicationTests {
     SkillService skillService;
     @Test
     void contextLoads() {
-        skillService.deleteSkill(1893735503);
+        System.out.println(skillService.getSumOfAllType());
+        System.out.println("你好！");
     }
 
 }

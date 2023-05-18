@@ -129,4 +129,10 @@ public class SkillController {
             return skillService.deleteSkill(id);
         }
     }
+
+    //查询每个系有多少个技能
+    @RequestMapping(value = "getSumOfAllType")
+    public List<Map<String, Object>> getSumOfAllType(){
+        return skillService.getSumOfAllType();
+    }
 }

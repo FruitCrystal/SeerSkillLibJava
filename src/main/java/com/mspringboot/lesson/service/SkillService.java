@@ -69,7 +69,7 @@ public class SkillService {
     //按照属性,查找该属性有多少个技能
     public Map<String,Long> searchNumOfType(String type){
         Long num = skillDao.selectCount(new QueryWrapper<SkillPojo>().eq("Type",type).last("limit 42"));
-        Map<String,Long> map = new HashMap();
+        Map<String,Long> map = new HashMap<>();
         map.put("sum",num);
         return map;
     }
@@ -90,7 +90,7 @@ public class SkillService {
     //按照名字,查找该属性有多少个技能
     public Map<String,Long> searchNumOfName(String name){
         Long num = skillDao.selectCount(new QueryWrapper<SkillPojo>().like("Name",name));
-        Map<String,Long> map = new HashMap();
+        Map<String,Long> map = new HashMap<>();
         map.put("sum",num);
         return map;
     }
@@ -113,5 +113,17 @@ public class SkillService {
     //删除自定义技能
     public int deleteSkill(int id){
         return skillDao.delete(new QueryWrapper<SkillPojo>().eq("ID",id));
+    }
+
+
+    //查询每个属性的技能数量
+    public  List<Map<String, Object>> getSumOfAllType(){
+//        Map<String,Long> map = new HashMap<>();
+//        List<TypePojo> typePojos = typeDao.selectList(new QueryWrapper<TypePojo>().select("DISTINCT Type").orderBy(true, true, "Type"));
+//        for (TypePojo t :typePojos){
+//            System.out.println(t.getType()+":");
+//        }
+            return skillDao.getTypeCount();
+
     }
 }

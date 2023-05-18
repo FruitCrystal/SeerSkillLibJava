@@ -1,6 +1,14 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/seer
+    url: jdbc:mysql://localhost:3306/seer?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+server:
+  tomcat:
+    uri-encoding: UTF-8
