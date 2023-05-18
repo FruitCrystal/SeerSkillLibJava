@@ -13,12 +13,12 @@ public class Result {
 
     public static  Result dealState(int state){
         if(state == 200)
-            return new Result("ok","å“åº”æˆåŠŸ");
+            return new Result("ok","ÏìÓ¦³É¹¦");
         else if(state == 404)
-            return new Result("no","æ‰¾ä¸åˆ°èµ„æº ");
+            return new Result("no","ÕÒ²»µ½×ÊÔ´ ");
         else if(state ==500)
-            return new Result("no","æœåŠ¡ç«¯å‡ºé”™");
+            return new Result("no","·şÎñ¶Ë³ö´í");
         else
-            return new Result("no","å“åº”å¤±è´¥");
+            return new Result("no","ÏìÓ¦Ê§°Ü");
     }
 }

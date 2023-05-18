@@ -15,7 +15,7 @@ import java.beans.Transient;
 @TableName(value = "seerskills")
 public class SkillPojo {
     @TableField(exist = false)
-    boolean isDIY;//exist=falseè¡¨æ˜è¯¥å­—æ®µåœ¨è¡¨ä¸­ä¸å­˜åœ¨ï¼Œæ˜¯å±äºè¿™ä¸ªå¯¹è±¡çš„æ ‡è¯†
+    boolean isDIY;//exist=false±íÃ÷¸Ã×Ö¶ÎÔÚ±íÖĞ²»´æÔÚ£¬ÊÇÊôÓÚÕâ¸ö¶ÔÏóµÄ±êÊ¶
     @TableId("ID") Integer id;
     @TableField("Name") String name;
     @TableField("Type") String type;
@@ -25,17 +25,17 @@ public class SkillPojo {
 
     @TableField("MaxPP") Integer maxPP;
 
-    @TableField("Priority") Integer priority;//å…ˆåˆ¶
+    @TableField("Priority") Integer priority;//ÏÈÖÆ
 
-    @TableField("Accuracy") String accuracy;//ç²¾å‡†åº¦
+    @TableField("Accuracy") String accuracy;//¾«×¼¶È
 
-    @TableField("CritRate") String critRate;//æš´å‡»ç‡
+    @TableField("CritRate") String critRate;//±©»÷ÂÊ
 
-    @TableField("Des") String des;//æè¿°
+    @TableField("Des") String des;//ÃèÊö
 
-    @TableField("PetsID") String petsID;//æŒæœ‰è€…id
+    @TableField("PetsID") String petsID;//³ÖÓĞÕßid
 
-    @TableField("PetsName") String petsName;//æŒæœ‰è€…åå­—
+    @TableField("PetsName") String petsName;//³ÖÓĞÕßÃû×Ö
 
     public boolean isDIY() {
         return isDIY;

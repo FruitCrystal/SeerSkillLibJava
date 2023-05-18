@@ -1,15 +1,14 @@
 package com.mspringboot.lesson.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import com.mspringboot.lesson.javabean.SkillPojo;
 import com.mspringboot.lesson.javabean.TypePojo;
 import com.mspringboot.lesson.service.SkillService;
 import com.mspringboot.lesson.utils.Result;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -34,49 +33,48 @@ public class SkillController {
 
     @RequestMapping(value = "/searchByName")
     public List<SkillPojo> searchBySkillName(@RequestParam(value = "name") String name,@RequestParam(value = "offset")int offset){
-        if(name==""){
+        if(Objects.equals(name, "")){
             return null;
         }
         return skillService.searchPageOfSkillByName(name,offset);
     }
 
-    //æ ¹æ®idåˆ†é¡µ,å‰ç«¯ä¼ å›å•æ¬¡æŸ¥è¯¢idçš„æœ€å¤§å€¼,è¯¥å€¼é»˜è®¤ä¸º0
+    //¸ù¾İid·ÖÒ³,Ç°¶Ë´«»Øµ¥´Î²éÑ¯idµÄ×î´óÖµ,¸ÃÖµÄ¬ÈÏÎª0
     @RequestMapping(value = "/searchPageOfSkill")
     public List<SkillPojo> searchByName(@RequestParam(value = "name") String name,@RequestParam(value = "maxID")int maxID){
         return skillService.searchPage(name,maxID);
     }
-    //æ ¹æ®IDæœç´¢æŠ€èƒ½
+    //¸ù¾İIDËÑË÷¼¼ÄÜ
     @RequestMapping(value = "/searchByID")
     public SkillPojo searchByID(int id){
-        id = (int)id;
         return skillService.doSearchByID(id);
     }
 
-    //æ ¹æ®åç§°æŸ¥è¯¢æŠ€èƒ½æ•°é‡
+    //¸ù¾İÃû³Æ²éÑ¯¼¼ÄÜÊıÁ¿
     @RequestMapping(value = "/getSumByName")
     public Map<String,Long> getSumByName(String name){
         return skillService.searchNumOfName(name);
     }
-    //è·å–æ‰€æœ‰å±æ€§
+    //»ñÈ¡ËùÓĞÊôĞÔ
     @RequestMapping(value = "getAllType")
     public List<TypePojo> getAllType(){
         return skillService.searchAllType();
     }
 
-    //æŒ‰å±æ€§æŸ¥è¯¢
+    //°´ÊôĞÔ²éÑ¯
     @RequestMapping(value = "searchByType")
     public List<SkillPojo> getAllByType(@RequestParam(value = "type") String type, @RequestParam(value = "orderBy") String orderBy,@RequestParam(value = "isAsc")boolean isasc,@RequestParam(value = "offset") int offset){
-        if(Objects.equals(type, "å±æ€§")){
+        if(Objects.equals(type, "ÊôĞÔ")){
             System.out.println(type);
             return skillService.doSearchByType("--",orderBy,isasc,offset);
         }
         return skillService.doSearchByType(type,orderBy,isasc,offset);
     }
 
-    //æŒ‰ç…§å±æ€§,æŸ¥æ‰¾è¯¥å±æ€§æœ‰å¤šå°‘ä¸ªæŠ€èƒ½
+    //°´ÕÕÊôĞÔ,²éÕÒ¸ÃÊôĞÔÓĞ¶àÉÙ¸ö¼¼ÄÜ
     @RequestMapping(value = "/getSumOfType")
     public Map<String,Long> getSumOfType(String type){
-        if(Objects.equals(type, "å±æ€§")){
+        if(Objects.equals(type, "ÊôĞÔ")){
             System.out.println(type);
             return skillService.searchNumOfType("--");
         }
@@ -85,20 +83,20 @@ public class SkillController {
 
     @RequestMapping(value = "/addSkill", method = RequestMethod.POST)
         public Result addSkill(HttpServletRequest request){
-        Map<String,Integer> map = new HashMap<>();
+//        Map<String,Integer> map = new HashMap<>();
         String name = request.getParameter("skillName");
         String category = request.getParameter("skillCategory");
         String type = request.getParameter("skillType");
-        if(type.equals("å±æ€§")){
+        if(type.equals("ÊôĞÔ")){
             type="--";
         }
         int pp = Integer.parseInt(request.getParameter("skillPP"));
         String accuracy = request.getParameter("skillAccuracy");
         int priority = Integer.parseInt(request.getParameter("skillPriority"));
-        int power = Integer.valueOf(request.getParameter("skillPower"));
+        int power = Integer.parseInt(request.getParameter("skillPower"));
         String critRate = request.getParameter("skillCritRate");
         String desList = request.getParameter("effect");
-        //å¤„ç†desæè¿°
+        //´¦ÀídesÃèÊö
         String desString ;
         if (desList.equals("")) {
             desString="--";
@@ -114,23 +112,24 @@ public class SkillController {
 //        return null;
     }
 
-    //æŸ¥è¯¢è‡ªå®šä¹‰æŠ€èƒ½
+    //²éÑ¯×Ô¶¨Òå¼¼ÄÜ
     @RequestMapping(value = "getPageOfDiySkill")
     public List<SkillPojo> getPageOf(){
         return skillService.searchDiySkill();
     }
 
-    //åˆ é™¤æŠ€èƒ½
+    //É¾³ı¼¼ÄÜ
     @RequestMapping(value = "deleteSkill")
     public int delSkill(int id){
         if(id<49999){
             return 0;
         }else {
-            return skillService.deleteSkill(id);
+            skillService.deleteSkill(id);
+            return id;
         }
     }
 
-    //æŸ¥è¯¢æ¯ä¸ªç³»æœ‰å¤šå°‘ä¸ªæŠ€èƒ½
+    //²éÑ¯Ã¿¸öÏµÓĞ¶àÉÙ¸ö¼¼ÄÜ
     @RequestMapping(value = "getSumOfAllType")
     public List<Map<String, Object>> getSumOfAllType(){
         return skillService.getSumOfAllType();

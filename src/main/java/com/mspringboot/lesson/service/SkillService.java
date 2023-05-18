@@ -23,23 +23,23 @@ public class SkillService {
     @Autowired
     TypeDao typeDao;
 
-//æŒ‰æŠ€èƒ½åå­—æŸ¥è¯¢
+//°´¼¼ÄÜÃû×Ö²éÑ¯
     public List<SkillPojo> searchPageOfSkillByName(String name,int offset){
         String last = "limit 42 offset "+ offset;
         List<SkillPojo> list = skillDao.selectList(new QueryWrapper<SkillPojo>().like("Name",name).last(last));
         return list;
     }
-//æŒ‰æŠ€èƒ½idæŸ¥è¯¢
+//°´¼¼ÄÜid²éÑ¯
     public SkillPojo doSearchByID(int id){
         SkillPojo skill = skillDao.selectOne(new QueryWrapper<SkillPojo>().eq("ID",id));
         return skill;
     }
-    //æŸ¥è¯¢æ‰€æœ‰æŠ€èƒ½
+    //²éÑ¯ËùÓĞ¼¼ÄÜ
     public List<SkillPojo> doSearchAll(){
         return skillDao.selectList(new QueryWrapper<SkillPojo>().select("ID","Name","Type","Power","MaxPP","Priority","Accuracy","CritRate","Des","Category").last("limit 100"));
     }
 
-    //éšæœºç”ŸæˆæŠ€èƒ½
+    //Ëæ»úÉú³É¼¼ÄÜ
     public List<SkillPojo> randomSearch(){
         Random random =new Random();
         List<Integer> randomIdList = new ArrayList<>();
@@ -47,33 +47,33 @@ public class SkillService {
         List<Integer> idList = new ArrayList<>();
         List<SkillPojo> skillList = skillDao.selectList(new QueryWrapper<SkillPojo>().select("ID"));
 
-        for (SkillPojo item: skillList) { //è·å–å®Œæ•´idåˆ—è¡¨
+        for (SkillPojo item: skillList) { //»ñÈ¡ÍêÕûidÁĞ±í
             resultSum++;
             idList.add((item.getId()));
             System.out.println(idList.size());//1~24147
         }
 
-        //ç”Ÿæˆ50ä¸ªéšæœºid
+        //Éú³É50¸öËæ»úid
         for (int i=0;i<49;i++){
             randomIdList.add(idList.get(random.nextInt(1,24147)));
         }
         return skillDao.selectBatchIds(randomIdList);
     }
-    //æŒ‰å±æ€§æŸ¥è¯¢æŠ€èƒ½(å¤šæ¡ä»¶)
+    //°´ÊôĞÔ²éÑ¯¼¼ÄÜ(¶àÌõ¼ş)
     public List<SkillPojo> doSearchByType(String type,String orderBy,boolean isAsc,int offset){
-        String lastSql = "limit 42 offset" + " " + offset;//åˆ†é¡µæŸ¥è¯¢,sql8.0ä»¥ä¸Šæ”¯æŒ,è¯­æ³•: select * from table limit `æ¯é¡µæ•°é‡` offset `æŸ¥è¯¢åç§»é‡`,å¦‚æœåç§»é‡æ˜¯400,å°±ä»ç¬¬400æŒ‘æ•°æ®å¼€å§‹æ‰¾
+        String lastSql = "limit 42 offset" + " " + offset;//·ÖÒ³²éÑ¯,sql8.0ÒÔÉÏÖ§³Ö,Óï·¨: select * from table limit `Ã¿Ò³ÊıÁ¿` offset `²éÑ¯Æ«ÒÆÁ¿`,Èç¹ûÆ«ÒÆÁ¿ÊÇ400,¾Í´ÓµÚ400ÌôÊı¾İ¿ªÊ¼ÕÒ
         List<SkillPojo> skill = skillDao.selectList(new QueryWrapper<SkillPojo>().eq("Type",type).orderBy(true,isAsc,orderBy).last(lastSql));
         return skill;
     }
 
-    //æŒ‰ç…§å±æ€§,æŸ¥æ‰¾è¯¥å±æ€§æœ‰å¤šå°‘ä¸ªæŠ€èƒ½
+    //°´ÕÕÊôĞÔ,²éÕÒ¸ÃÊôĞÔÓĞ¶àÉÙ¸ö¼¼ÄÜ
     public Map<String,Long> searchNumOfType(String type){
         Long num = skillDao.selectCount(new QueryWrapper<SkillPojo>().eq("Type",type).last("limit 42"));
         Map<String,Long> map = new HashMap<>();
         map.put("sum",num);
         return map;
     }
-    //æŸ¥è¯¢æ‰€æœ‰å±æ€§
+    //²éÑ¯ËùÓĞÊôĞÔ
     public List<TypePojo> searchAllType(){
         List<TypePojo> list = typeDao.selectList(new QueryWrapper<TypePojo>().select("DISTINCT  Type"));
         list.remove(86);
@@ -81,13 +81,13 @@ public class SkillService {
         return list;
     }
 
-    //æ ¹æ®idåˆ†é¡µ,å‰ç«¯ä¼ å›å•æ¬¡æŸ¥è¯¢idçš„æœ€å¤§å€¼,è¯¥å€¼é»˜è®¤ä¸º0. è¿™ä¸€æ–¹æ³•å­˜åœ¨å±€é™,ä¸èƒ½å¾€å›ç¿»é¡µ,å¦åˆ™IDä¼šé”™ä¹±,é€‚åˆç”¨äºå¾€ä¸‹æ»‘åŠ è½½æ›´å¤šçš„é¡µé¢
+    //¸ù¾İid·ÖÒ³,Ç°¶Ë´«»Øµ¥´Î²éÑ¯idµÄ×î´óÖµ,¸ÃÖµÄ¬ÈÏÎª0. ÕâÒ»·½·¨´æÔÚ¾ÖÏŞ,²»ÄÜÍù»Ø·­Ò³,·ñÔòID»á´íÂÒ,ÊÊºÏÓÃÓÚÍùÏÂ»¬¼ÓÔØ¸ü¶àµÄÒ³Ãæ
     public  List<SkillPojo> searchPage(String name,int maxID){
         return  skillDao.selectList(new QueryWrapper<SkillPojo>().like("Name",name).orderBy(true,true,"ID").gt("ID",maxID).last("limit 42"));
-        //ä½¿ç”¨IDæ¡ä»¶æ¥è¿›è¡Œåˆ†é¡µ,å“åº”é€Ÿåº¦æ›´å¿«,ä½†æ˜¯å‰ç«¯ä»ç„¶æ— æ³•è·å¾—æ•°æ®æ€»æ•°,ä»ç„¶éœ€è¦ä¸¤ä¸ªæ¥å£çš„ååŒ
+        //Ê¹ÓÃIDÌõ¼şÀ´½øĞĞ·ÖÒ³,ÏìÓ¦ËÙ¶È¸ü¿ì,µ«ÊÇÇ°¶ËÈÔÈ»ÎŞ·¨»ñµÃÊı¾İ×ÜÊı,ÈÔÈ»ĞèÒªÁ½¸ö½Ó¿ÚµÄĞ­Í¬
     }
 
-    //æŒ‰ç…§åå­—,æŸ¥æ‰¾è¯¥å±æ€§æœ‰å¤šå°‘ä¸ªæŠ€èƒ½
+    //°´ÕÕÃû×Ö,²éÕÒ¸ÃÊôĞÔÓĞ¶àÉÙ¸ö¼¼ÄÜ
     public Map<String,Long> searchNumOfName(String name){
         Long num = skillDao.selectCount(new QueryWrapper<SkillPojo>().like("Name",name));
         Map<String,Long> map = new HashMap<>();
@@ -95,7 +95,7 @@ public class SkillService {
         return map;
     }
 
-    //æ–°å¢è‡ªå®šä¹‰æŠ€èƒ½
+    //ĞÂÔö×Ô¶¨Òå¼¼ÄÜ
     public Result addSkill(SkillPojo pojo){
         int rows = skillDao.insert(pojo);
         int state = 0;
@@ -105,18 +105,18 @@ public class SkillService {
             return Result.dealState(404);
         }
     }
-    //æŸ¥è¯¢è‡ªå®šä¹‰æŠ€èƒ½
+    //²éÑ¯×Ô¶¨Òå¼¼ÄÜ
     public List<SkillPojo> searchDiySkill(){
         return skillDao.selectList( new QueryWrapper<SkillPojo>().select().gt("ID",49999));
     }
 
-    //åˆ é™¤è‡ªå®šä¹‰æŠ€èƒ½
+    //É¾³ı×Ô¶¨Òå¼¼ÄÜ
     public int deleteSkill(int id){
         return skillDao.delete(new QueryWrapper<SkillPojo>().eq("ID",id));
     }
 
 
-    //æŸ¥è¯¢æ¯ä¸ªå±æ€§çš„æŠ€èƒ½æ•°é‡
+    //²éÑ¯Ã¿¸öÊôĞÔµÄ¼¼ÄÜÊıÁ¿
     public  List<Map<String, Object>> getSumOfAllType(){
 //        Map<String,Long> map = new HashMap<>();
 //        List<TypePojo> typePojos = typeDao.selectList(new QueryWrapper<TypePojo>().select("DISTINCT Type").orderBy(true, true, "Type"));
