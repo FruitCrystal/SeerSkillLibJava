@@ -37,6 +37,7 @@ public class SkillPojo {
 
     @TableField("PetsName") String petsName;//持有者名字
 
+    @Deprecated
     public boolean isDIY() {
         return isDIY;
     }
