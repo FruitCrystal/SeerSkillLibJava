@@ -14,7 +14,7 @@ import java.util.Map;
 public interface SkillDao extends BaseMapper<SkillPojo> {
 
 //该功能用MybatisPlus无法实现，故回到Mybatis，因为MybatisPlus是基于Mybatis的
-        @Select("SELECT Type,COUNT(`Name`) AS  `name` FROM seerskills GROUP BY Type ORDER BY Type DESC")
+        @Select("SELECT Type,COUNT(`Name`) AS  `sum` FROM seerskills GROUP BY Type  ORDER BY Count(`Name`) DESC")
         List<Map<String, Object>> getTypeCount();
 
 }
