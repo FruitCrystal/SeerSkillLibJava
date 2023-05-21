@@ -44,6 +44,7 @@ public class SkillController {
     public List<SkillPojo> searchByName(@RequestParam(value = "name") String name,@RequestParam(value = "maxID")int maxID){
         return skillService.searchPage(name,maxID);
     }
+
     //根据ID搜索技能
     @RequestMapping(value = "/searchByID")
     public SkillPojo searchByID(int id){
