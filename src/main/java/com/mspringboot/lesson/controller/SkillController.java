@@ -20,10 +20,6 @@ public class SkillController {
     @Autowired
     SkillService skillService;
 
-    @RequestMapping(value = "/searchAll")
-    public List<SkillPojo> searchAll(){
-        return skillService.doSearchAll();
-    }
 
     @RequestMapping(value = "/searchRandomly")
     public List<SkillPojo> searchRandomly(){
@@ -106,7 +102,8 @@ public class SkillController {
         }
         System.out.println(desString);
         int ID =Math.round((float) (Math.abs(name.hashCode()+category.hashCode()+critRate.hashCode()+desList.hashCode()+accuracy.hashCode()+type.hashCode()+power*10000+pp*10000+priority*10000)))+49999;
-        SkillPojo diySkill = new SkillPojo(ID,name,type,category,power,pp,priority,accuracy,critRate,desString,"","");
+        SkillPojo diySkill = new SkillPojo(ID,name,type,category,power,pp,priority,accuracy,critRate,desString,"","","");
+//        SkillPojo diySkill = new SkillPojo(ID,name)
         System.out.println(diySkill);
         System.out.println("ID="+ID);
             return skillService.addSkill(diySkill);
@@ -140,5 +137,16 @@ public class SkillController {
     @RequestMapping(value = "getSkillByIdOrName")
     public List<SkillPojo> getSkillByIdOrName(String val){
         return skillService.getSkillByIdOrName(val);
+    }
+
+    //根据技能效果查询
+    @RequestMapping(value = "getSkillByEffect")
+    public List<SkillPojo> getSkillsBySideEffect(@RequestParam(value = "id") int id, @RequestParam(value = "page") int page){
+        return skillService.getSkillsByEffect(id,page);
+    }
+
+    @RequestMapping(value = "getSumOfSkillByEffect")
+    public Long getSumOfSkillByEffect(int id){
+        return skillService.getSumOfSkillByEffect(id);
     }
 }

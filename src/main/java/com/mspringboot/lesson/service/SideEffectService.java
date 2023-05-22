@@ -17,4 +17,8 @@ public class SideEffectService {
     public List<EffectPojo> getEffect(){
         return effectDao.selectList(new QueryWrapper<EffectPojo>().select("ID","Des"));
     }
+
+    public EffectPojo getOneEffect(int id){
+        return effectDao.selectOne(new QueryWrapper<EffectPojo>().eq("ID",id));
+    }
 }

@@ -36,25 +36,18 @@ public class SkillService {
         SkillPojo skill = skillDao.selectOne(new QueryWrapper<SkillPojo>().eq("ID",id));
         return skill;
     }
-    //查询所有技能
-    public List<SkillPojo> doSearchAll(){
-        return skillDao.selectList(new QueryWrapper<SkillPojo>().select("ID","Name","Type","Power","MaxPP","Priority","Accuracy","CritRate","Des","Category").last("limit 100"));
-    }
+
 
     //随机生成技能
     public List<SkillPojo> randomSearch(){
         Random random =new Random();
         List<Integer> randomIdList = new ArrayList<>();
-        int resultSum =0;
         List<Integer> idList = new ArrayList<>();
         List<SkillPojo> skillList = skillDao.selectList(new QueryWrapper<SkillPojo>().select("ID"));
-
         for (SkillPojo item: skillList) { //获取完整id列表
-            resultSum++;
             idList.add((item.getId()));
             System.out.println(idList.size());//1~24147
         }
-
         //生成50个随机id
         for (int i=0;i<49;i++){
             randomIdList.add(idList.get(random.nextInt(1,24147)));
@@ -151,5 +144,16 @@ public class SkillService {
             return skillDao.selectList(new QueryWrapper<SkillPojo>().like("PetsName",keyWord));
 //            return skillDao.getSkillByName(keyWord);
         }
+    }
+
+    //根据技能效果查找相关技能
+    public List<SkillPojo> getSkillsByEffect(int id,int page){
+        String sql = " WHERE FIND_IN_SET("+id+",REPLACE(SideEffect,' ',',')) limit 42 offset "+(page-1)*42;
+        return  skillDao.selectList(new QueryWrapper<SkillPojo>().last(sql));
+    }
+
+    //根据类型查询技能数量
+    public Long getSumOfSkillByEffect(int id){
+        return skillDao.selectCount(new QueryWrapper<SkillPojo>().last("WHERE FIND_IN_SET("+id+",REPLACE(SideEffect,' ',','))"));
     }
 }

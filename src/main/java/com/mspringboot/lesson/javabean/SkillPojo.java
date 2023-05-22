@@ -11,7 +11,7 @@ import java.beans.Transient;
 
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @TableName(value = "seerskills")
 public class SkillPojo {
     @TableId("ID") Integer id;
@@ -35,18 +35,5 @@ public class SkillPojo {
 
     @TableField("PetsName") String petsName;//持有者名字
 
-    public SkillPojo(Integer id, String name, String type, String category, Integer power, Integer maxPP, Integer priority, String accuracy, String critRate, String des, String petsID, String petsName) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.category = category;
-        this.power = power;
-        this.maxPP = maxPP;
-        this.priority = priority;
-        this.accuracy = accuracy;
-        this.critRate = critRate;
-        this.des = des;
-        this.petsID = petsID;
-        this.petsName = petsName;
-    }
+    @TableField("SideEffect") String sideEffect;
 }

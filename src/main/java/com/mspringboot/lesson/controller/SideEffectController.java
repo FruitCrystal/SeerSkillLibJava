@@ -1,6 +1,7 @@
 package com.mspringboot.lesson.controller;
 
 import com.mspringboot.lesson.javabean.EffectPojo;
+import com.mspringboot.lesson.mapper.EffectDao;
 import com.mspringboot.lesson.service.SideEffectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,5 +24,10 @@ public class SideEffectController {
     @RequestMapping(value = "/getEffect",method = RequestMethod.GET)
     public List<EffectPojo> getEffect(){
         return sideEffectService.getEffect();
+    }
+
+    @RequestMapping(value = "getOneEffectByID")
+    public EffectPojo getOneEffect(int id){
+        return sideEffectService.getOneEffect(id);
     }
 }

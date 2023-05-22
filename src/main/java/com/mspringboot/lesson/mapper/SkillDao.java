@@ -17,6 +17,7 @@ public interface SkillDao extends BaseMapper<SkillPojo> {
         @Select("SELECT Type,COUNT(`Name`) AS  `sum` FROM seerskills GROUP BY Type  ORDER BY Count(`Name`) DESC")
         List<Map<String, Object>> getTypeCount();
 
+
 //        @Select("SELECT * FROM seerskills where PetsID like` %#{key}%`")
 //        List<SkillPojo> getSkillById(String key);
 //
