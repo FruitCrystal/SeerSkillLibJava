@@ -9,7 +9,9 @@ import com.mspringboot.lesson.javabean.TypePojo;
 import com.mspringboot.lesson.mapper.SkillDao;
 import com.mspringboot.lesson.mapper.TypeDao;
 import com.mspringboot.lesson.utils.Result;
+import org.apache.catalina.valves.rewrite.RewriteCond;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.type.filter.RegexPatternTypeFilter;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -125,5 +127,29 @@ public class SkillService {
 //        }
             return skillDao.getTypeCount();
 
+    }
+
+    //按照技能持有者的id或者名字查找相关技能
+    public List<SkillPojo> getSkillByIdOrName(String keyWord){
+        if( keyWord.matches("^[0-9]+$")){
+            System.out.println("是ID");
+            List<SkillPojo> skillPojoList = skillDao.selectList(new QueryWrapper<SkillPojo>().last("WHERE FIND_IN_SET("+keyWord+",PetsID)"));
+            return skillPojoList;
+           /* List<SkillPojo> result = new ArrayList<>();
+            for (SkillPojo s: skillPojoList) {
+                System.out.println(Arrays.toString(s.getPetsID().split(",")));
+                if(Arrays.stream(s.getPetsID().split(",")).toList().contains(keyWord)){
+                    result.add(s);
+                }else {
+                    return null;
+                }
+            }
+            return result;*/
+//            return skillDao.getSkillById(keyWord);
+        }else {
+            System.out.println("是名字");
+            return skillDao.selectList(new QueryWrapper<SkillPojo>().like("PetsName",keyWord));
+//            return skillDao.getSkillByName(keyWord);
+        }
     }
 }

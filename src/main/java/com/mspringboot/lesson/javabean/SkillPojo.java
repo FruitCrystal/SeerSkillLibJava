@@ -14,8 +14,6 @@ import java.beans.Transient;
 //@AllArgsConstructor
 @TableName(value = "seerskills")
 public class SkillPojo {
-    @TableField(exist = false)
-    boolean isDIY;//exist=false表明该字段在表中不存在，是属于这个对象的标识
     @TableId("ID") Integer id;
     @TableField("Name") String name;
     @TableField("Type") String type;
@@ -36,15 +34,6 @@ public class SkillPojo {
     @TableField("PetsID") String petsID;//持有者id
 
     @TableField("PetsName") String petsName;//持有者名字
-
-    @Deprecated
-    public boolean isDIY() {
-        return isDIY;
-    }
-
-    public void setDIY(boolean DIY) {
-        isDIY = DIY;
-    }
 
     public SkillPojo(Integer id, String name, String type, String category, Integer power, Integer maxPP, Integer priority, String accuracy, String critRate, String des, String petsID, String petsName) {
         this.id = id;

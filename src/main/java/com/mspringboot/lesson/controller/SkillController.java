@@ -135,4 +135,10 @@ public class SkillController {
     public List<Map<String, Object>> getSumOfAllType(){
         return skillService.getSumOfAllType();
     }
+
+    //查询每个系有多少个技能
+    @RequestMapping(value = "getSkillByIdOrName")
+    public List<SkillPojo> getSkillByIdOrName(String val){
+        return skillService.getSkillByIdOrName(val);
+    }
 }
