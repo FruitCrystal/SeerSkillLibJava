@@ -36,4 +36,5 @@ public class SkillPojo {
     @TableField("PetsName") String petsName;//持有者名字
 
     @TableField("SideEffect") String sideEffect;
+
 }

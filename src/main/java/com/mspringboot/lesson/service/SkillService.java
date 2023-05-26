@@ -28,7 +28,7 @@ public class SkillService {
 //按技能名字查询
     public List<SkillPojo> searchPageOfSkillByName(String name,int offset){
         String last = "limit 42 offset "+ offset;
-        List<SkillPojo> list = skillDao.selectList(new QueryWrapper<SkillPojo>().like("Name",name).last(last));
+        List<SkillPojo> list = skillDao.selectList(new QueryWrapper<SkillPojo>().like("Name",name).last(last).orderBy(true,true,"Power"));
         return list;
     }
 //按技能id查询
@@ -56,7 +56,7 @@ public class SkillService {
     }
     //按属性查询技能(多条件)
     public List<SkillPojo> doSearchByType(String type,String orderBy,boolean isAsc,int offset){
-        String lastSql = "limit 42 offset" + " " + offset;//分页查询,sql8.0以上支持,语法: select * from table limit `每页数量` offset `查询偏移量`,如果偏移量是400,就从第400挑数据开始找
+        String lastSql = "limit 32 offset" + " " + offset;//分页查询,sql8.0以上支持,语法: select * from table limit `每页数量` offset `查询偏移量`,如果偏移量是400,就从第400挑数据开始找
         List<SkillPojo> skill = skillDao.selectList(new QueryWrapper<SkillPojo>().eq("Type",type).orderBy(true,isAsc,orderBy).last(lastSql));
         return skill;
     }
@@ -92,6 +92,7 @@ public class SkillService {
 
     //新增自定义技能
     public Result addSkill(SkillPojo pojo){
+
         int rows = skillDao.insert(pojo);
         int state = 0;
         if(rows>0){
@@ -155,5 +156,10 @@ public class SkillService {
     //根据类型查询技能数量
     public Long getSumOfSkillByEffect(int id){
         return skillDao.selectCount(new QueryWrapper<SkillPojo>().last("WHERE FIND_IN_SET("+id+",REPLACE(SideEffect,' ',','))"));
+    }
+
+    //寻找某个属性下具备某种效果的技能列表
+    public List<SkillPojo> getSkillsByEffectAndType(int id,String type){
+        return skillDao.selectList(new QueryWrapper<SkillPojo>().eq("Type",type).having("FIND_IN_SET("+id+",REPLACE(SideEffect,' ',',')) "));
     }
 }

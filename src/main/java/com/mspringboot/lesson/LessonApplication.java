@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 @MapperScan("com.mspringboot.lesson.mapper")
 public class LessonApplication {
 
-    public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
 
 
         SpringApplication.run(LessonApplication.class, args);

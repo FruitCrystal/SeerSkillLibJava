@@ -30,4 +30,13 @@ public class SideEffectController {
     public EffectPojo getOneEffect(int id){
         return sideEffectService.getOneEffect(id);
     }
+
+    @RequestMapping(value = "getEffectByDes")//根据效果描述模糊搜索效果
+    public List<EffectPojo> getEffectByDes(String des){
+        return sideEffectService.getEffectByDes(des);
+    }
+
+    //寻找某个属性下具备某种效果的技能列表
+
+
 }

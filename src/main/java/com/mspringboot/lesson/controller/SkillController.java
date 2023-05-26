@@ -149,4 +149,9 @@ public class SkillController {
     public Long getSumOfSkillByEffect(int id){
         return skillService.getSumOfSkillByEffect(id);
     }
+
+    @RequestMapping(value = "getSkillByEffectAndType")
+    public List<SkillPojo> getSkillByEffectAndType(int id,String type){
+        return skillService.getSkillsByEffectAndType(id,type);
+    }
 }
