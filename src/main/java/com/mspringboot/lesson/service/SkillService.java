@@ -37,7 +37,6 @@ public class SkillService {
         return skill;
     }
 
-
     //随机生成技能
     public List<SkillPojo> randomSearch(){
         Random random =new Random();

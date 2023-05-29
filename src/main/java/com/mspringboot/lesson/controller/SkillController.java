@@ -152,6 +152,12 @@ public class SkillController {
 
     @RequestMapping(value = "getSkillByEffectAndType")
     public List<SkillPojo> getSkillByEffectAndType(int id,String type){
-        return skillService.getSkillsByEffectAndType(id,type);
+        if(Objects.equals(type, " Ù–‘")){
+            return skillService.getSkillsByEffectAndType(id,"--");
+        }else {
+            return skillService.getSkillsByEffectAndType(id,type);
+        }
+
+
     }
 }
